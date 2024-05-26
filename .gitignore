@@ -1,0 +1,3 @@
+backend/auth/vendor
+backend/auth/database/database.sqlite
+backend/auth/.env
