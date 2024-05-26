@@ -1,3 +1,7 @@
 backend/auth/vendor
 backend/auth/database/database.sqlite
 backend/auth/.env
+
+backend/catalog/vendor
+backend/catalog/database/database.sqlite
+backend/catalog/.env
