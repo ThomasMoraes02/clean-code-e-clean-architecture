@@ -1,5 +1,5 @@
 <?php 
-namespace Auth\Infra\Http\Client;
+namespace Catalog\Infra\Http\Client;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;

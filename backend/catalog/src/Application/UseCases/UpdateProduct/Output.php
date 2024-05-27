@@ -1,5 +1,5 @@
 <?php 
-namespace Auth\Application\UseCases\UpdateProduct;
+namespace Catalog\Application\UseCases\UpdateProduct;
 
 class Output
 {

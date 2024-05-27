@@ -2,15 +2,15 @@
 
 require_once __DIR__ . "/bootstrap.php";
 
-use Auth\Application\UseCases\CreateProduct\CreateProduct;
-use Auth\Application\UseCases\DeleteProduct\DeleteProduct;
-use Auth\Infra\Http\Server\SlimAdapter;
-use Auth\Infra\Http\Middleware\ErrorMiddleware;
-use Auth\Infra\Repository\ProductRepositorySqlite;
-use Auth\Infra\Http\Middleware\OutputJsonMiddleware;
-use Auth\Application\UseCases\GetProducts\GetProducts;
-use Auth\Application\UseCases\UpdateProduct\UpdateProduct;
-use Auth\Infra\Http\Controller\ProductController;
+use Catalog\Application\UseCases\CreateProduct\CreateProduct;
+use Catalog\Application\UseCases\DeleteProduct\DeleteProduct;
+use Catalog\Infra\Http\Server\SlimAdapter;
+use Catalog\Infra\Http\Middleware\ErrorMiddleware;
+use Catalog\Infra\Repository\ProductRepositorySqlite;
+use Catalog\Infra\Http\Middleware\OutputJsonMiddleware;
+use Catalog\Application\UseCases\GetProducts\GetProducts;
+use Catalog\Application\UseCases\UpdateProduct\UpdateProduct;
+use Catalog\Infra\Http\Controller\ProductController;
 
 $httpServer = new SlimAdapter();
 

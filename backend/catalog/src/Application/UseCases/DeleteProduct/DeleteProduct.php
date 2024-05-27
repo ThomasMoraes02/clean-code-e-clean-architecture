@@ -1,7 +1,7 @@
 <?php 
-namespace Auth\Application\UseCases\DeleteProduct;
+namespace Catalog\Application\UseCases\DeleteProduct;
 
-use Auth\Application\Repository\ProductRepository;
+use Catalog\Application\Repository\ProductRepository;
 use Exception;
 
 class DeleteProduct

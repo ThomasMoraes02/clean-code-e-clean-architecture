@@ -1,6 +1,6 @@
 {
-    "name": "thomas/auth",
-    "description": "Serviço de autenticação e autorização de usuário",
+    "name": "thomas/catalog",
+    "description": "Serviço de catálogo de produtos",
     "require": {
         "ramsey/uuid": "^4.7",
         "firebase/php-jwt": "^6.10",
@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Auth\\": "src/"
+            "Catalog\\": "src/"
         }
     },
     "autoload-dev": {

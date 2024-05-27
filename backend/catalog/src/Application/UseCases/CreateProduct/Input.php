@@ -1,5 +1,5 @@
 <?php 
-namespace Auth\Application\UseCases\CreateProduct;
+namespace Catalog\Application\UseCases\CreateProduct;
 
 class Input
 {

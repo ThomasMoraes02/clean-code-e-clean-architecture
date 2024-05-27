@@ -1,14 +1,14 @@
 <?php 
-namespace Auth\Infra\Http\Controller;
+namespace Catalog\Infra\Http\Controller;
 
-use Auth\Application\UseCases\CreateProduct\CreateProduct;
-use Auth\Application\UseCases\CreateProduct\Input as CreateProductInput;
-use Auth\Application\UseCases\DeleteProduct\DeleteProduct;
-use Auth\Application\UseCases\GetProducts\GetProducts;
-use Auth\Application\UseCases\GetProducts\Input as GetProductsInput;
-use Auth\Application\UseCases\UpdateProduct\Input as UpdateProductInput;
-use Auth\Application\UseCases\UpdateProduct\UpdateProduct;
-use Auth\Infra\Http\Server\HttpServer;
+use Catalog\Application\UseCases\CreateProduct\CreateProduct;
+use Catalog\Application\UseCases\CreateProduct\Input as CreateProductInput;
+use Catalog\Application\UseCases\DeleteProduct\DeleteProduct;
+use Catalog\Application\UseCases\GetProducts\GetProducts;
+use Catalog\Application\UseCases\GetProducts\Input as GetProductsInput;
+use Catalog\Application\UseCases\UpdateProduct\Input as UpdateProductInput;
+use Catalog\Application\UseCases\UpdateProduct\UpdateProduct;
+use Catalog\Infra\Http\Server\HttpServer;
 
 class ProductController
 {

@@ -1,6 +1,6 @@
 <?php
 
-use Auth\Domain\Entities\Product;
+use Catalog\Domain\Entities\Product;
 
 test("Deve criar um produto", function() {
     $product = Product::create("Product 1","ABC-123",150,1);

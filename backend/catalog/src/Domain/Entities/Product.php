@@ -1,5 +1,5 @@
 <?php 
-namespace Auth\Domain\Entities;
+namespace Catalog\Domain\Entities;
 
 use Exception;
 use Ramsey\Uuid\Uuid;

@@ -1,8 +1,8 @@
 <?php 
-namespace Auth\Infra\Repository;
+namespace Catalog\Infra\Repository;
 
-use Auth\Application\Repository\ProductRepository;
-use Auth\Domain\Entities\Product;
+use Catalog\Application\Repository\ProductRepository;
+use Catalog\Domain\Entities\Product;
 use PDO;
 
 class ProductRepositorySqlite implements ProductRepository

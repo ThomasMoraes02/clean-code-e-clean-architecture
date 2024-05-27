@@ -1,5 +1,5 @@
 <?php 
-namespace Auth\Application\UseCases\GetProducts;
+namespace Catalog\Application\UseCases\GetProducts;
 
 class MultipleOutput
 {

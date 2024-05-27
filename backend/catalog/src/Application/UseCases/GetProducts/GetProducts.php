@@ -1,10 +1,10 @@
 <?php 
-namespace Auth\Application\UseCases\GetProducts;
+namespace Catalog\Application\UseCases\GetProducts;
 
 use Exception;
-use Auth\Application\UseCases\GetProducts\Input;
-use Auth\Application\UseCases\GetProducts\Output;
-use Auth\Application\Repository\ProductRepository;
+use Catalog\Application\UseCases\GetProducts\Input;
+use Catalog\Application\UseCases\GetProducts\Output;
+use Catalog\Application\Repository\ProductRepository;
 
 class GetProducts
 {

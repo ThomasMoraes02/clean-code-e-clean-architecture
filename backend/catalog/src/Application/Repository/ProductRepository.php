@@ -1,7 +1,7 @@
 <?php 
-namespace Auth\Application\Repository;
+namespace Catalog\Application\Repository;
 
-use Auth\Domain\Entities\Product;
+use Catalog\Domain\Entities\Product;
 
 interface ProductRepository
 {

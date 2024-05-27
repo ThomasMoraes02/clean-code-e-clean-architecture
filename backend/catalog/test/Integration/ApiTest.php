@@ -1,7 +1,7 @@
 <?php 
 namespace Test\Integration;
 
-use Auth\Infra\Http\Client\GuzzleAdapter;
+use Catalog\Infra\Http\Client\GuzzleAdapter;
 
 test("Deve listar os produtos", function() {
     $client = new GuzzleAdapter("http://localhost:8008");

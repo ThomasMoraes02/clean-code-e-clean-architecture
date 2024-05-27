@@ -1,14 +1,14 @@
 <?php
 
-use Auth\Application\Repository\ProductRepository;
-use Auth\Application\UseCases\CreateProduct\Input;
-use Auth\Infra\Repository\ProductRepositoryMemory;
-use Auth\Application\UseCases\GetProducts\GetProducts;
-use Auth\Application\UseCases\CreateProduct\CreateProduct;
-use Auth\Application\UseCases\DeleteProduct\DeleteProduct;
-use Auth\Application\UseCases\GetProducts\Input as GetProductsInput;
-use Auth\Application\UseCases\UpdateProduct\Input as UpdateProductInput;
-use Auth\Application\UseCases\UpdateProduct\UpdateProduct;
+use Catalog\Application\Repository\ProductRepository;
+use Catalog\Application\UseCases\CreateProduct\Input;
+use Catalog\Infra\Repository\ProductRepositoryMemory;
+use Catalog\Application\UseCases\GetProducts\GetProducts;
+use Catalog\Application\UseCases\CreateProduct\CreateProduct;
+use Catalog\Application\UseCases\DeleteProduct\DeleteProduct;
+use Catalog\Application\UseCases\GetProducts\Input as GetProductsInput;
+use Catalog\Application\UseCases\UpdateProduct\Input as UpdateProductInput;
+use Catalog\Application\UseCases\UpdateProduct\UpdateProduct;
 
 beforeEach(function() {
     $this->productRepository = new ProductRepositoryMemory();

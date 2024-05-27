@@ -1,11 +1,11 @@
 <?php 
-namespace Auth\Application\UseCases\UpdateProduct;
+namespace Catalog\Application\UseCases\UpdateProduct;
 
 use PHPUnit\Metadata\Exception;
-use Auth\Application\Repository\ProductRepository;
-use Auth\Application\UseCases\UpdateProduct\Input;
-use Auth\Application\UseCases\UpdateProduct\Output;
-use Auth\Domain\Entities\Product;
+use Catalog\Application\Repository\ProductRepository;
+use Catalog\Application\UseCases\UpdateProduct\Input;
+use Catalog\Application\UseCases\UpdateProduct\Output;
+use Catalog\Domain\Entities\Product;
 
 class UpdateProduct
 {

@@ -1,9 +1,9 @@
 <?php 
-namespace Auth\Application\UseCases\CreateProduct;
+namespace Catalog\Application\UseCases\CreateProduct;
 
 use Exception;
-use Auth\Domain\Entities\Product;
-use Auth\Application\Repository\ProductRepository;
+use Catalog\Domain\Entities\Product;
+use Catalog\Application\Repository\ProductRepository;
 
 class CreateProduct
 {

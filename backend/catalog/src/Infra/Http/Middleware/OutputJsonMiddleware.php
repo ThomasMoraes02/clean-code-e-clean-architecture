@@ -1,5 +1,5 @@
 <?php 
-namespace Auth\Infra\Http\Middleware;
+namespace Catalog\Infra\Http\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
