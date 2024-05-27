@@ -1,7 +1,7 @@
 <?php 
 namespace Auth\Application\UseCases\GetProducts;
 
-class Output
+class MultipleOutput
 {
     public function __construct(
         public string $uuid,

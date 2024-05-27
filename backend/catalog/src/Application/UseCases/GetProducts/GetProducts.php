@@ -1,6 +1,7 @@
 <?php 
 namespace Auth\Application\UseCases\GetProducts;
 
+use Exception;
 use Auth\Application\UseCases\GetProducts\Input;
 use Auth\Application\UseCases\GetProducts\Output;
 use Auth\Application\Repository\ProductRepository;
@@ -11,6 +12,12 @@ class GetProducts
 
     public function execute(Input $input): array
     {
+        if($input->uuid) {
+            $product = $this->productRepository->getByUuid($input->uuid);
+            if(!$product) throw new Exception("Product not found");
+            return [new SimpleOutput($product->uuid(),$product->name(),$product->code(),$product->price(), $product->quantity())];
+        }
+
         /** @var Output[] */
         $output = [];
         $products = $this->productRepository->getProducts([
@@ -19,7 +26,7 @@ class GetProducts
         ]);
         
         foreach($products as $product) {
-            $output[] = new Output($product->uuid(),$product->name(),$product->code(),$product->price());
+            $output[] = new MultipleOutput($product->uuid(),$product->name(),$product->code(),$product->price());
         }
         return $output;
     }
