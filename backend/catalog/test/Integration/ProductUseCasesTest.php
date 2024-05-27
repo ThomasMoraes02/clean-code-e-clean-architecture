@@ -1,13 +1,18 @@
 <?php
 
+use Auth\Application\Repository\ProductRepository;
 use Auth\Application\UseCases\CreateProduct\Input;
 use Auth\Infra\Repository\ProductRepositoryMemory;
 use Auth\Application\UseCases\GetProducts\GetProducts;
 use Auth\Application\UseCases\CreateProduct\CreateProduct;
+use Auth\Application\UseCases\DeleteProduct\DeleteProduct;
 use Auth\Application\UseCases\GetProducts\Input as GetProductsInput;
+use Auth\Application\UseCases\UpdateProduct\Input as UpdateProductInput;
+use Auth\Application\UseCases\UpdateProduct\UpdateProduct;
 
 beforeEach(function() {
     $this->productRepository = new ProductRepositoryMemory();
+    $this->createProductUseCase = new CreateProduct($this->productRepository);
 });
 
 dataset("products", [
@@ -38,17 +43,15 @@ test("Deve criar um produto", function() {
 test("Deve lançar uma exceção ao tentar criar um produto com code existente", function() {
     $input = new Input("Product 1","ABC-123",150.0,10);
     $input2 = new Input("Product 2","ABC-123",20.0,8);
-    $useCase = new CreateProduct($this->productRepository);
 
-    $useCase->execute($input);
-    expect(fn() => $useCase->execute($input2))->toThrow(Exception::class);
+    $this->createProductUseCase->execute($input);
+    expect(fn() => $this->createProductUseCase->execute($input2))->toThrow(Exception::class);
 });
 
 test("Deve listar os produtos do repositório", function(array $products) {
-    $useCase = new CreateProduct($this->productRepository);
     foreach($products as $product) {
         $input = new Input($product["name"],$product["code"],$product["price"],$product["quantity"]);
-        $useCase->execute($input);
+        $this->createProductUseCase->execute($input);
     }
 
     $input = new GetProductsInput();
@@ -56,8 +59,38 @@ test("Deve listar os produtos do repositório", function(array $products) {
     $output = $useCase->execute($input);
     expect($output)->toBeArray();
     expect(count($output))->toBe(2);
-    expect($output[0]->name)->toBe("Product 1");
-    expect($output[0]->code)->toBe("ABC-123");
-    expect($output[0]->price)->toBe(150.0);
+    expect($output[0])->toMatchObject([
+        "name" => "Product 1",
+        "code" => "ABC-123",
+        "price" => 150.0
+    ]);
     expect($output[0]->uuid)->toBeString();
+})->with("products");
+
+test("Deve deletar um produto do repositório", function(array $products) {
+    foreach($products as $product) {
+        $input = new Input($product["name"],$product["code"],$product["price"],$product["quantity"]);
+        $output = $this->createProductUseCase->execute($input);
+    }
+
+    $useCase = new DeleteProduct($this->productRepository);
+    $outputDeletedProduct = $useCase->execute($output->uuid);
+    expect($outputDeletedProduct)->toBe("Product deleted");
+    expect($this->productRepository->getByUuid($output->uuid))->toBeNull();
+    expect(count($this->productRepository->getProducts()))->toBe(1);
+})->with("products");
+
+test("Deve atualizar um produto do repositório", function(array $products) {
+    $output = $this->createProductUseCase->execute(new Input($products[0]["name"],$products[0]["code"],$products[0]["price"],$products[0]["quantity"]));
+
+    $useCase = new UpdateProduct($this->productRepository);
+    $input = new UpdateProductInput($output->uuid,"Product Test","ABC-123", 300.0);
+    $output = $useCase->execute($input);
+
+    $product = $this->productRepository->getByUuid($output->uuid);
+    expect($product->uuid())->toBe($output->uuid);
+    expect($product->name())->toBe("Product Test");
+    expect($product->code())->toBe("ABC-123");
+    expect($product->price())->toBe(300.0);
+    expect($product->quantity())->toBe(10);
 })->with("products");
