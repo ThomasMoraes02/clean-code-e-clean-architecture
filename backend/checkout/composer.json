@@ -1,6 +1,6 @@
 {
     "name": "thomas/checkout",
-    "description": "Serviço de autenticação e autorização de usuário",
+    "description": "Serviço de checkout",
     "require": {
         "ramsey/uuid": "^4.7",
         "firebase/php-jwt": "^6.10",
