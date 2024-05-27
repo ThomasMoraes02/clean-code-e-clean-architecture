@@ -5,3 +5,7 @@ backend/auth/.env
 backend/catalog/vendor
 backend/catalog/database/database.sqlite
 backend/catalog/.env
+
+backend/checkout/vendor
+backend/checkout/database/database.sqlite
+backend/checkout/.env
