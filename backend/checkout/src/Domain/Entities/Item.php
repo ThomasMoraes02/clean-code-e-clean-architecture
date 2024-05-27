@@ -1,5 +1,5 @@
 <?php 
-namespace Auth\Domain\Entities;
+namespace Checkout\Domain\Entities;
 
 class Item
 {

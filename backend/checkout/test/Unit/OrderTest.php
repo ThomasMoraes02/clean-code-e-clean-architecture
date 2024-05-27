@@ -1,7 +1,7 @@
 <?php
 
-use Auth\Domain\Entities\Order;
-use Auth\Domain\Entities\Product;
+use Checkout\Domain\Entities\Order;
+use Checkout\Domain\Entities\Product;
 
 test("Deve criar um pedido vazio", function() {
     $order = new Order("order-1");

@@ -1,9 +1,9 @@
 <?php 
-namespace Auth\Domain\Entities;
+namespace Checkout\Domain\Entities;
 
 use Ramsey\Uuid\Uuid;
-use Auth\Domain\Entities\Item;
-use Auth\Domain\Entities\Product;
+use Checkout\Domain\Entities\Item;
+use Checkout\Domain\Entities\Product;
 use Exception;
 
 class Order

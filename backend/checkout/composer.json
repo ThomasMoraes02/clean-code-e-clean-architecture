@@ -1,5 +1,5 @@
 {
-    "name": "thomas/auth",
+    "name": "thomas/checkout",
     "description": "Serviço de autenticação e autorização de usuário",
     "require": {
         "ramsey/uuid": "^4.7",
@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Auth\\": "src/"
+            "Checkout\\": "src/"
         }
     },
     "autoload-dev": {

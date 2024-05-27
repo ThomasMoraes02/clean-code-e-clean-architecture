@@ -1,5 +1,5 @@
 <?php
-namespace Auth\Infra\Http\Middleware;
+namespace Checkout\Infra\Http\Middleware;
 
 use Throwable;
 use Slim\Psr7\Response;

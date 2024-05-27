@@ -1,5 +1,5 @@
 <?php 
-namespace Auth\Infra\Http\Server;
+namespace Checkout\Infra\Http\Server;
 
 use Psr\Http\Server\MiddlewareInterface;
 use Slim\App;
