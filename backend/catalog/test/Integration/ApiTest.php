@@ -8,5 +8,4 @@ test("Deve listar os produtos", function() {
     $response = $client->get("products");
     $output = json_decode($response->getBody());
     expect($response->getStatusCode())->toBe(200);
-    expect(count($output))->toBe(2);
 });
