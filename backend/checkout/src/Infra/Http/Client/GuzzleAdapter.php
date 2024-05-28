@@ -17,7 +17,11 @@ class GuzzleAdapter implements HttpClient
 
     public function get(string $url): mixed
     {
-        return $this->client->sendAsync($this->request('GET', $url))->wait();
+        try {
+            return $this->client->sendAsync($this->request('GET', $url))->wait();
+        } catch(ClientException $e) {
+            return $e->getResponse();
+        }
     }
 
     public function post(string $url, array $body): mixed

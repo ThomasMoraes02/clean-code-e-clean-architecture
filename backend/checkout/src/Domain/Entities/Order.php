@@ -40,4 +40,10 @@ class Order
     {
         return $this->uuid;
     }
+
+    /** @return Item[] */
+    public function getItems(): array
+    {
+        return $this->items;
+    }
 }

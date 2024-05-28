@@ -9,7 +9,6 @@ use Checkout\Infra\Repository\ProductRepositoryMemory;
 
 beforeEach(function() {
     $this->orderRepository = new OrderRepositoryMemory();
-    $this->productRepository = new ProductRepositoryMemory();
 
     $catalog = [];
     $products = [
@@ -21,7 +20,7 @@ beforeEach(function() {
         [
             "uuid" => "p2",
             "name" => "Product 2",
-            "price" => 200.0
+            "price" => 100.0
         ],
         [
             "uuid" => "p3",
@@ -36,7 +35,6 @@ beforeEach(function() {
     $this->catalogGateway = new CatalogGatewayMemory($catalog);
 
     $this->checkout = new Checkout(
-        $this->productRepository,
         $this->orderRepository,
         $this->catalogGateway
     );
@@ -59,7 +57,7 @@ test("Deve criar um pedido com 3 produtos", function() {
     ]);
 
     $output = $this->checkout->execute($input);
-    expect($output->total)->toBe(1200.0);
+    expect($output->total)->toBe(1100.0);
 });
 
 test("Deve lancar uma exceção ao criar um pedido com itens duplicados", function() {
@@ -86,4 +84,22 @@ test("Deve lançar uma exceção ao criar pedido com quantidade negativa", funct
     ]);
 
     expect(fn() => $this->checkout->execute($input))->toThrow(Exception::class);
+});
+
+test("Deve lançar uma exceção ao criar pedido com itens inexistentes", function() {
+    $input = new Input([]);
+    expect(fn() => $this->checkout->execute($input))->toThrow(Exception::class);
+});
+
+test("Deve retornar os produtos do catálogo", function() {
+    $products = $this->catalogGateway->getProducts();
+
+    expect(count($products))->toBe(3);
+
+    foreach($products as $uuid => $product) {
+        expect($uuid)->toBe($product->uuid);
+        expect($product->uuid)->toBeString();
+        expect($product->name)->toBeString();
+        expect($product->price)->toBeFloat();
+    }
 });
