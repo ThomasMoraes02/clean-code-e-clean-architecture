@@ -2,17 +2,19 @@
 
 require_once __DIR__ . "/bootstrap.php";
 
+use Checkout\Application\Decorator\AuthDecorator;
 use Checkout\Infra\Http\Server\SlimAdapter;
 use Checkout\Infra\Http\Middleware\ErrorMiddleware;
 use Checkout\Infra\Http\Middleware\OutputJsonMiddleware;
 use Checkout\Application\UseCases\Checkout\Checkout;
+use Checkout\Infra\Gateway\AuthGatewayHttp;
 use Checkout\Infra\Gateway\CatalogGatewayHttp;
 use Checkout\Infra\Http\Client\GuzzleAdapter;
 use Checkout\Infra\Http\Controller\CheckoutController;
 use Checkout\Infra\Repository\OrderRepositorySqlite;
 
 $httpServer = new SlimAdapter();
-$httpClient = new GuzzleAdapter("http://localhost:8008");
+$httpClient = new GuzzleAdapter();
 
 $databasePath = __DIR__ . "/../database/database.sqlite";
 $pdo = new PDO("sqlite:{$databasePath}");
@@ -31,9 +33,10 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS order_items (
 $orderRepository = new OrderRepositorySqlite($pdo);
 
 $catalogGateway = new CatalogGatewayHttp($httpClient);
+$authGateway = new AuthGatewayHttp($httpClient);
 
-$checkout = new Checkout($orderRepository,$catalogGateway);
-$checkoutController = new CheckoutController($httpServer, $checkout);
+$checkout = new Checkout($orderRepository,$catalogGateway, $authGateway);
+$checkoutController = new CheckoutController($httpServer, new AuthDecorator($checkout, $authGateway));
 
 $httpServer->addMiddleware(new ErrorMiddleware());
 $httpServer->addMiddleware(new OutputJsonMiddleware());

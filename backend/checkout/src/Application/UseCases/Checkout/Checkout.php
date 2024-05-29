@@ -1,19 +1,20 @@
 <?php 
 namespace Checkout\Application\UseCases\Checkout;
 
-use Checkout\Application\Gateway\CatalogGateway;
-use Checkout\Domain\Entities\Order;
-use Checkout\Application\Repository\OrderRepository;
 use Exception;
+use Checkout\Domain\Entities\Order;
+use Checkout\Application\UseCases\UseCase;
+use Checkout\Application\Gateway\CatalogGateway;
+use Checkout\Application\Repository\OrderRepository;
 
-class Checkout
+class Checkout implements UseCase
 {
     public function __construct(
         private readonly OrderRepository $orderRepository,
-        private readonly CatalogGateway $catalogGateway
+        private readonly CatalogGateway $catalogGateway,
     ) {}
 
-    public function execute(Input $input): Output
+    public function execute(mixed $input): Output
     {
         $order = new Order();
         if(empty($input->items)) throw new Exception("Items not found");

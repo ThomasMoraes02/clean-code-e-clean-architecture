@@ -1,9 +1,12 @@
 <?php
 
-use Checkout\Application\UseCases\Checkout\Checkout;
-use Checkout\Application\UseCases\Checkout\Input;
+use Checkout\Application\Decorator\AuthDecorator;
+use Checkout\Application\Decorator\LogDecorator;
 use Checkout\Domain\Entities\Product;
+use Checkout\Application\Gateway\AuthGateway;
 use Checkout\Infra\Gateway\CatalogGatewayMemory;
+use Checkout\Application\UseCases\Checkout\Input;
+use Checkout\Application\UseCases\Checkout\Checkout;
 use Checkout\Infra\Repository\OrderRepositoryMemory;
 use Checkout\Infra\Repository\ProductRepositoryMemory;
 
@@ -33,11 +36,8 @@ beforeEach(function() {
         $catalog[$product->uuid] = $product;
     }
     $this->catalogGateway = new CatalogGatewayMemory($catalog);
-
-    $this->checkout = new Checkout(
-        $this->orderRepository,
-        $this->catalogGateway
-    );
+    $this->authGateway = Mockery::mock(AuthGateway::class);
+    $this->checkout = new Checkout($this->orderRepository,$this->catalogGateway);
 });
 
 test("Deve criar um pedido com 3 produtos", function() {
@@ -102,4 +102,35 @@ test("Deve retornar os produtos do catálogo", function() {
         expect($product->name)->toBeString();
         expect($product->price)->toBeFloat();
     }
+});
+
+test("Deve criar um pedido se o usuário estiver autenticado", function() {
+    $this->authGateway->shouldReceive("verify")->andReturn(json_decode(json_encode(["email" => "thomas@gmail"])));
+
+    $token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoIiwiaWF0IjoxNzE2OTM4OTM1LCJleHAiOjE3MTY5NDI1MzUsImVtYWlsIjoidGhvbWFzQGdtYWlsLmNvbSJ9.6UFyQJLfkf6tu41XikrGt30OmQWhFnVQzUzTUDLO_Rk";
+    $input = new Input([
+        [
+            "uuid" => "p1", 
+            "quantity" => 1
+        ]
+    ], $token);
+
+    $decoratedCheckout = new AuthDecorator($this->checkout, $this->authGateway);
+    $output = $decoratedCheckout->execute($input);
+    expect($output->total)->toBe(100.0);
+});
+
+test("Deve criar um pedido com o decorator de log em texto no console", function() {
+    $this->authGateway->shouldReceive("verify")->andReturn(json_decode(json_encode(["email" => "thomas@gmail"])));
+    $token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhdXRoIiwiaWF0IjoxNzE2OTM4OTM1LCJleHAiOjE3MTY5NDI1MzUsImVtYWlsIjoidGhvbWFzQGdtYWlsLmNvbSJ9.6UFyQJLfkf6tu41XikrGt30OmQWhFnVQzUzTUDLO_Rk";
+    $input = new Input([
+        [
+            "uuid" => "p1", 
+            "quantity" => 1
+        ]
+    ], $token);
+
+    $decoratedCheckout = new LogDecorator($this->checkout);
+    $output = $decoratedCheckout->execute($input);
+    expect($output->total)->toBe(100.0);
 });
