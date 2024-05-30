@@ -15,7 +15,7 @@ class CatalogGatewayHttp implements CatalogGateway
         $response = $this->client->get("{$this->host}/products/{$uuid}");
         $data = json_decode($response->getBody());
         if(is_array($data)) $data = $data[0];
-        if($data->errors->message) throw new Exception($data->errors->message);
+        if(isset($data->errors) && isset($data->errors->message)) throw new Exception($data->errors->message);
         return new Product($data->uuid, $data->name, $data->price);
     }
 
