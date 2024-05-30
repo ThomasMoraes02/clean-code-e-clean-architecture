@@ -10,9 +10,9 @@ class GuzzleAdapter implements HttpClient
 {
     private Client $client;
 
-    public function __construct(private readonly string $baseUri) 
+    public function __construct(private ?string $baseUri = null) 
     {
-        $this->client = new Client(['base_uri' => $baseUri]);
+        $this->client = ($baseUri) ? new Client(['base_uri' => $baseUri]) : new Client();
     }
 
     public function get(string $url): mixed

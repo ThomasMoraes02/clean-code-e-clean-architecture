@@ -7,11 +7,11 @@ use Checkout\Application\Gateway\AuthGateway;
 
 class AuthGatewayHttp implements AuthGateway
 {
-    public function __construct(private readonly HttpClient $client) {}
+    public function __construct(private readonly HttpClient $client, private readonly string $host) {}
 
     public function verify(string $token): mixed
     {
-        $response = $this->client->post("http://localhost:8007/verify", ["token" => $token]);
+        $response = $this->client->post("{$this->host}/verify", ["token" => $token]);
         $output = json_decode($response->getBody());
         if($response->getStatusCode() != 200) {
             if(isset($output->errors->message)) throw new Exception($output->errors->message, 401);

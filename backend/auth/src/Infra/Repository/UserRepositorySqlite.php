@@ -13,7 +13,7 @@ class UserRepositorySqlite implements UserRepository
     {
         $query = "SELECT * FROM users WHERE email = :email";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindParam('email',$email);
+        $stmt->bindValue('email',$email);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if(!$user) return null;
@@ -24,10 +24,10 @@ class UserRepositorySqlite implements UserRepository
     {
         $query = "INSERT INTO users (uuid, name, email, password) VALUES (:uuid, :name, :email, :password)";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindParam('uuid',$user->uuid());
-        $stmt->bindParam('name',$user->name());
-        $stmt->bindParam('email',$user->email());
-        $stmt->bindParam('password',$user->password());
+        $stmt->bindValue('uuid',$user->uuid());
+        $stmt->bindValue('name',$user->name());
+        $stmt->bindValue('email',$user->email());
+        $stmt->bindValue('password',$user->password());
         $stmt->execute();
     }
 }

@@ -8,11 +8,11 @@ use Exception;
 
 class CatalogGatewayHttp implements CatalogGateway
 {
-    public function __construct(private readonly HttpClient $client) {}
+    public function __construct(private readonly HttpClient $client, private readonly string $host) {}
 
     public function getProduct(string $uuid): Product
     {
-        $response = $this->client->get("http://localhost:8008/products/{$uuid}");
+        $response = $this->client->get("{$this->host}/products/{$uuid}");
         $data = json_decode($response->getBody());
         if(is_array($data)) $data = $data[0];
         if($data->errors->message) throw new Exception($data->errors->message);
@@ -21,7 +21,7 @@ class CatalogGatewayHttp implements CatalogGateway
 
     public function getProducts(): array
     {
-        $response = $this->client->get("http://localhost:8008/products");
+        $response = $this->client->get("{$this->host}/products");
         $products = [];
         $data = json_decode($response->getBody());
         foreach($data as $product) {

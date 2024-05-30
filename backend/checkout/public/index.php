@@ -34,8 +34,8 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS order_items (
 
 $orderRepository = new OrderRepositorySqlite($pdo);
 
-$catalogGateway = new CatalogGatewayHttp($httpClient);
-$authGateway = new AuthGatewayHttp($httpClient);
+$catalogGateway = new CatalogGatewayHttp($httpClient, $catalogHost);
+$authGateway = new AuthGatewayHttp($httpClient, $authHost);
 $getOrder = new GetOrder($orderRepository);
 
 $checkout = new Checkout($orderRepository,$catalogGateway, $authGateway);

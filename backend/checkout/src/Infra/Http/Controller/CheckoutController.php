@@ -20,7 +20,7 @@ class CheckoutController
             return ["data" => $output, "statusCode" => 201];
         });
 
-        $this->server->on("GET", "/order/{uuid}", function($params, $body, $args) {
+        $this->server->on("GET", "/orders/{uuid}", function($params, $body, $args) {
             $input = new GetOrderInput($args['uuid']);
             $output = $this->getOrder->execute($input);
             return ["data" => $output, "statusCode" => 200];

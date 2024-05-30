@@ -17,7 +17,8 @@ class ErrorMiddleware implements MiddlewareInterface
         try {
             return $handler->handle($request);
         } catch (Throwable | RequestException $e) {
-            // var_dump($e);die();
+            echo "<pre>";
+            var_dump($e);die();
             $message = $e->getMessage();
             $stack = [
                 'file' => $e->getFile(),
