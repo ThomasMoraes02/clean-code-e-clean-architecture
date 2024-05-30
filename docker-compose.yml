@@ -31,6 +31,7 @@ services:
           - ./backend/checkout:/var/www/html
         depends_on:
           - checkout-php
+          - messaging
     
     auth-php:
         build: ./docker/php
@@ -52,6 +53,8 @@ services:
         volumes:
           - ./docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini
           - ./backend/checkout:/var/www/html
+        depends_on:
+          - messaging
     
     messaging:
         image: rabbitmq:3-management
