@@ -7,6 +7,7 @@ use Checkout\Infra\Http\Server\SlimAdapter;
 use Checkout\Infra\Http\Middleware\ErrorMiddleware;
 use Checkout\Infra\Http\Middleware\OutputJsonMiddleware;
 use Checkout\Application\UseCases\Checkout\Checkout;
+use Checkout\Application\UseCases\GetOrder\GetOrder;
 use Checkout\Infra\Gateway\AuthGatewayHttp;
 use Checkout\Infra\Gateway\CatalogGatewayHttp;
 use Checkout\Infra\Http\Client\GuzzleAdapter;
@@ -34,9 +35,14 @@ $orderRepository = new OrderRepositorySqlite($pdo);
 
 $catalogGateway = new CatalogGatewayHttp($httpClient);
 $authGateway = new AuthGatewayHttp($httpClient);
+$getOrder = new GetOrder($orderRepository);
 
 $checkout = new Checkout($orderRepository,$catalogGateway, $authGateway);
-$checkoutController = new CheckoutController($httpServer, new AuthDecorator($checkout, $authGateway));
+$checkoutController = new CheckoutController(
+    $httpServer, 
+    new AuthDecorator($checkout, $authGateway),
+    $getOrder
+);
 
 $httpServer->addMiddleware(new ErrorMiddleware());
 $httpServer->addMiddleware(new OutputJsonMiddleware());

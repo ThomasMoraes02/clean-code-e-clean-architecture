@@ -5,6 +5,7 @@ use PDO;
 use Checkout\Domain\Entities\Item;
 use Checkout\Domain\Entities\Order;
 use Checkout\Application\Repository\OrderRepository;
+use Checkout\Domain\Entities\Product;
 
 class OrderRepositorySqlite implements OrderRepository
 {
@@ -12,13 +13,43 @@ class OrderRepositorySqlite implements OrderRepository
 
     public function getByUuid(string $uuid): ?Order
     {
+        $order = $this->getOrder($uuid);
+        if(!$order) return null;
+        $items = $this->getItems($uuid);
+        foreach($items as $item) {
+            $order->addItem($item['product'],$item['quantity']);
+        }
+        return $order;
+    }
+
+    private function getOrder(string $uuid): ?Order
+    {
         $select = "SELECT * FROM orders WHERE uuid = :uuid";
         $stmt = $this->pdo->prepare($select);
         $stmt->bindValue('uuid',$uuid);
         $stmt->execute();
         $row = $stmt->fetch();
         if(!$row) return null;
+
         return new Order($row['uuid']);
+    }
+
+    private function getItems(string $uuid): array
+    {
+        $select = "SELECT * FROM order_items WHERE order_uuid = :order_uuid";
+        $stmt = $this->pdo->prepare($select);
+        $stmt->bindValue('order_uuid',$uuid);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
+        $orderItems = [];
+        foreach($items as $item) {
+            $orderItems[] = [
+                "product" => new Product($item['product_uuid'],'', $item['price']),
+                "quantity" => $item['quantity']
+            ];
+        }
+
+        return $orderItems;
     }
 
     public function save(Order $order): void
