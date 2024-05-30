@@ -27,3 +27,10 @@ test("Deve lançar uma exceção ao criar um pedido com itens com quantidade inv
     $order = new Order();
     expect(fn() => $order->addItem(new Product("p1", "Product 1", 100.0), -1))->toThrow(Exception::class);
 });
+
+test("Deve criar um pedido e salvar a data e horário de criação", function() {
+    $order = new Order("order-1", new DateTimeImmutable(date('2024-05-29 22:35:10')));
+    $order->addItem(new Product("p1", "Product 1", 100.0), 1);
+    expect($order->getCreatedAt())->toBeInstanceOf(DateTimeImmutable::class);
+    expect($order->getCreatedAt()->format('Y-m-d H:i:s'))->toBe('2024-05-29 22:35:10');
+});

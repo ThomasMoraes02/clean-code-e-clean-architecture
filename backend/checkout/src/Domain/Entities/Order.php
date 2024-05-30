@@ -1,22 +1,29 @@
 <?php 
 namespace Checkout\Domain\Entities;
 
+use Exception;
+use DateTimeZone;
 use Ramsey\Uuid\Uuid;
+use DateTimeImmutable;
 use Checkout\Domain\Entities\Item;
 use Checkout\Domain\Entities\Product;
-use Exception;
 
 class Order
 {
     private readonly string $uuid;
 
+    private readonly DateTimeImmutable $createdAt;
+
     /** @var Item[] */
     private array $items = [];
 
-    public function __construct(?string $uuid = null) 
+    public function __construct(?string $uuid = null, ?DateTimeImmutable $createdAt = null) 
     {
         if(!$uuid) $uuid = Uuid::uuid4()->toString();
         $this->uuid = $uuid;
+
+        if(!$createdAt) $createdAt = new DateTimeImmutable();
+        $this->createdAt = $createdAt;
     }
 
     public function addItem(Product $product, int $quantity): void
@@ -45,5 +52,10 @@ class Order
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 }

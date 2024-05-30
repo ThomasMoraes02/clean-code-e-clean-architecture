@@ -25,6 +25,6 @@ class GetOrder implements UseCase
                 "quantity" => $item->quantity
             ];
         }
-        return new Output($order->getUuid(),$order->getTotal(),$items);
+        return new Output($order->getUuid(),$order->getTotal(),$items, $order->getCreatedAt()->format('Y-m-d H:i:s'));
     }
 }

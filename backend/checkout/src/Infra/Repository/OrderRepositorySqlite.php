@@ -2,10 +2,12 @@
 namespace Checkout\Infra\Repository;
 
 use PDO;
+use DateTimeZone;
+use DateTimeImmutable;
 use Checkout\Domain\Entities\Item;
 use Checkout\Domain\Entities\Order;
-use Checkout\Application\Repository\OrderRepository;
 use Checkout\Domain\Entities\Product;
+use Checkout\Application\Repository\OrderRepository;
 
 class OrderRepositorySqlite implements OrderRepository
 {
@@ -31,7 +33,8 @@ class OrderRepositorySqlite implements OrderRepository
         $row = $stmt->fetch();
         if(!$row) return null;
 
-        return new Order($row['uuid']);
+        $datetime = new DateTimeImmutable(date('Y-m-d H:i:s',$row['created_at']));
+        return new Order($row['uuid'],$datetime);
     }
 
     private function getItems(string $uuid): array
@@ -60,10 +63,11 @@ class OrderRepositorySqlite implements OrderRepository
 
     private function saveOrder(Order $order): void
     {
-        $insert = "INSERT INTO orders (uuid, total) VALUES (:uuid, :total)";
+        $insert = "INSERT INTO orders (uuid, total, created_at) VALUES (:uuid, :total, :created_at)";
         $stmt = $this->pdo->prepare($insert);
         $stmt->bindValue('uuid',$order->getUuid());
         $stmt->bindValue('total',$order->getTotal());
+        $stmt->bindValue('created_at',$order->getCreatedAt()->getTimestamp());
         $stmt->execute();
     }
 

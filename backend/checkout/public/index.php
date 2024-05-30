@@ -22,7 +22,8 @@ $pdo = new PDO("sqlite:{$databasePath}");
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $pdo->exec("CREATE TABLE IF NOT EXISTS orders (
     uuid VARCHAR(255) NOT NULL,
-    total FLOAT NOT NULL
+    total FLOAT NOT NULL,
+    created_at DATETIME NOT NULL
 );");
 $pdo->exec("CREATE TABLE IF NOT EXISTS order_items (
     order_uuid VARCHAR(255) NOT NULL,
