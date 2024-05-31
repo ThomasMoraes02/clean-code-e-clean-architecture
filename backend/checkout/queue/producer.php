@@ -9,7 +9,7 @@ $connection = new AMQPStreamConnection("messaging",5672,"user", "password");
 
 $channel = $connection->channel();
 
-$channel->queue_declare("teste_fila", false,false,false,false);
+$channel->queue_declare("teste_fila", auto_delete: false);
 
 $msg = new AMQPMessage(json_encode([
     "name" => "Thomas",
