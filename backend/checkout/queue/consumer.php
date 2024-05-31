@@ -9,9 +9,7 @@ $connection = new AMQPStreamConnection("messaging", 5672, "user", "password");
 
 $channel = $connection->channel();
 
-$channel->queue_declare("teste_fila",false,true,false,false);
-
-$channel->basic_consume("teste_fila",no_ack:true, callback: function(AMQPMessage $message) {
+$channel->basic_consume("teste_fila",no_ack:true,callback: function(AMQPMessage $message) {
     echo "[x] Mensagem recebida: " . $message->getBody() . "\n";
     // Marca a mensagem como processada
     // $message->ack();

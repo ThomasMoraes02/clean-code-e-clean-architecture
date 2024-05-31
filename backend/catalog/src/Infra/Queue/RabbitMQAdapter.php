@@ -1,0 +1,39 @@
+<?php 
+namespace Catalog\Infra\Queue;
+
+use Catalog\Infra\Queue\Queue;
+use PhpAmqpLib\Message\AMQPMessage;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+
+class RabbitMQAdapter implements Queue
+{
+    private readonly AMQPStreamConnection $connection;
+
+    public function connect(): void
+    {
+        $this->connection = new AMQPStreamConnection("messaging",5672,"user","password");
+    }
+
+    public function on(string $queueName, callable $callback): void
+    {
+        $channel = $this->connection->channel();
+        $channel->queue_declare($queueName,false,false,false,false);
+        $channel->basic_consume($queueName, '', false, true, false, false,function(AMQPMessage $message) use ($callback) {
+            $callback($message->getBody());
+            // $message->ack();
+        });
+
+        $channel->close();
+        $this->connection->close();
+    }
+
+    public function publish(string $queueName, mixed $message): void
+    {
+        $channel = $this->connection->channel();
+        $channel->queue_declare($queueName,false,true,false,false);
+        $msg = new AMQPMessage(json_encode($message));
+        $channel->basic_publish($msg,'',$queueName);
+        $channel->close();
+        $this->connection->close();
+    }
+}
