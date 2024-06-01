@@ -5,6 +5,7 @@ class Output
 {
     public function __construct(
         public readonly string $uuid,
-        public readonly float $total
+        public readonly float $total,
+        public readonly ?string $email = null
     ) {}
 }

@@ -3,6 +3,7 @@
 require_once __DIR__ . "/bootstrap.php";
 
 use Checkout\Application\Decorator\AuthDecorator;
+use Checkout\Application\Decorator\MailDecorator;
 use Checkout\Infra\Http\Server\SlimAdapter;
 use Checkout\Infra\Http\Middleware\ErrorMiddleware;
 use Checkout\Infra\Http\Middleware\OutputJsonMiddleware;
@@ -12,6 +13,7 @@ use Checkout\Infra\Gateway\AuthGatewayHttp;
 use Checkout\Infra\Gateway\CatalogGatewayHttp;
 use Checkout\Infra\Http\Client\GuzzleAdapter;
 use Checkout\Infra\Http\Controller\CheckoutController;
+use Checkout\Infra\Mail\PHPMailerAdapter;
 use Checkout\Infra\Repository\OrderRepositorySqlite;
 
 $httpServer = new SlimAdapter();
@@ -36,12 +38,17 @@ $orderRepository = new OrderRepositorySqlite($pdo);
 
 $catalogGateway = new CatalogGatewayHttp($httpClient, $catalogHost);
 $authGateway = new AuthGatewayHttp($httpClient, $authHost);
+$mail = new PHPMailerAdapter($mailHost, $mailPort,$mailUsername, $mailPassword);
+
 $getOrder = new GetOrder($orderRepository);
 
 $checkout = new Checkout($orderRepository,$catalogGateway, $authGateway);
+$authDecorator = new AuthDecorator($checkout, $authGateway);
+$mailDecorator = new MailDecorator($authDecorator, $mail);
+
 $checkoutController = new CheckoutController(
     $httpServer, 
-    new AuthDecorator($checkout, $authGateway),
+    $authDecorator,
     $getOrder
 );
 

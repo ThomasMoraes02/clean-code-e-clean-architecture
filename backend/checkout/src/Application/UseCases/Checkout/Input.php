@@ -5,6 +5,7 @@ class Input
 {
     public function __construct(
         public readonly array $items,
-        public readonly ?string $token = null
+        public readonly ?string $token = null,
+        public ?string $email = null,
     ) {}
 }

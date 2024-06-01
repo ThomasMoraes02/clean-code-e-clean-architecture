@@ -14,6 +14,7 @@ class AuthDecorator implements UseCase
     {
         if(!$input->token) throw new Exception("Token is required",401);
         $payload = $this->authGateway->verify($input->token);
+        $input->email = $payload->email;
         return $this->useCase->execute($input);
     }
 }

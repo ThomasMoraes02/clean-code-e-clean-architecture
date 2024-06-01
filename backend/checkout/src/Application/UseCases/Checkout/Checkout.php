@@ -24,6 +24,6 @@ class Checkout implements UseCase
         }
 
         $this->orderRepository->save($order);
-        return new Output($order->getUuid(),$order->getTotal());
+        return new Output($order->getUuid(),$order->getTotal(),$input->email);
     }
 }
