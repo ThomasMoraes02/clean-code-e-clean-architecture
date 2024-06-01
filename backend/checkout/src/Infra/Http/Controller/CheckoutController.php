@@ -17,7 +17,10 @@ class CheckoutController
             $items = json_decode(json_encode($body->items), true);
             $input = new Input($items,$body->token);
             $output = $this->checkout->execute($input);
-            return ["data" => $output, "statusCode" => 201];
+            return ["data" => [
+                "uuid" => $output->uuid,
+                "total" => $output->total
+            ], "statusCode" => 201];
         });
 
         $this->server->on("GET", "/orders/{uuid}", function($params, $body, $args) {
