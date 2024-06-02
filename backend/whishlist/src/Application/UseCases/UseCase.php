@@ -1,5 +1,5 @@
 <?php 
-namespace Checkout\Application\UseCases;
+namespace Whishlist\Application\UseCases;
 
 interface UseCase
 {

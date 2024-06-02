@@ -1,5 +1,5 @@
 <?php 
-namespace Checkout\Infra\Http\Server;
+namespace Whishlist\Infra\Http\Server;
 
 use Psr\Http\Server\MiddlewareInterface;
 

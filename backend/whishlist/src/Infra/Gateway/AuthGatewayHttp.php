@@ -1,9 +1,9 @@
 <?php 
-namespace Checkout\Infra\Gateway;
+namespace Whishlist\Infra\Gateway;
 
 use Exception;
-use Checkout\Infra\Http\Client\HttpClient;
-use Checkout\Application\Gateway\AuthGateway;
+use Whishlist\Infra\Http\Client\HttpClient;
+use Whishlist\Application\Gateway\AuthGateway;
 
 class AuthGatewayHttp implements AuthGateway
 {

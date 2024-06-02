@@ -1,8 +1,8 @@
 <?php 
-namespace Checkout\Infra\Gateway;
+namespace Whishlist\Infra\Gateway;
 
-use Checkout\Application\Gateway\CatalogGateway;
-use Checkout\Domain\Entities\Product;
+use Whishlist\Application\Gateway\CatalogGateway;
+use Whishlist\Domain\Entities\Product;
 
 class CatalogGatewayMemory implements CatalogGateway
 {

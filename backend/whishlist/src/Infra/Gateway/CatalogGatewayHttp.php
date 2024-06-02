@@ -1,9 +1,9 @@
 <?php 
-namespace Checkout\Infra\Gateway;
+namespace Whishlist\Infra\Gateway;
 
-use Checkout\Application\Gateway\CatalogGateway;
-use Checkout\Domain\Entities\Product;
-use Checkout\Infra\Http\Client\HttpClient;
+use Whishlist\Application\Gateway\CatalogGateway;
+use Whishlist\Domain\Entities\Product;
+use Whishlist\Infra\Http\Client\HttpClient;
 use Exception;
 
 class CatalogGatewayHttp implements CatalogGateway

@@ -1,5 +1,5 @@
 <?php 
-namespace Checkout\Infra\Http\Middleware;
+namespace Whishlist\Infra\Http\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;

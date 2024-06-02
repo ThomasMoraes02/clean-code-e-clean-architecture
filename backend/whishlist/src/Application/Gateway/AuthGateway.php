@@ -1,5 +1,5 @@
 <?php 
-namespace Checkout\Application\Gateway;
+namespace Whishlist\Application\Gateway;
 
 interface AuthGateway
 {

@@ -1,5 +1,5 @@
 <?php 
-namespace Checkout\Infra\Http\Client;
+namespace Whishlist\Infra\Http\Client;
 
 interface HttpClient
 {

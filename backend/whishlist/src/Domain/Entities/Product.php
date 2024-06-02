@@ -1,5 +1,5 @@
 <?php
-namespace Checkout\Domain\Entities;
+namespace Whishlist\Domain\Entities;
 
 class Product
 {

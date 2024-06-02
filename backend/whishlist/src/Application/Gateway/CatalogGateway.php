@@ -1,7 +1,7 @@
 <?php 
-namespace Checkout\Application\Gateway;
+namespace Whishlist\Application\Gateway;
 
-use Checkout\Domain\Entities\Product;
+use Whishlist\Domain\Entities\Product;
 
 interface CatalogGateway
 {

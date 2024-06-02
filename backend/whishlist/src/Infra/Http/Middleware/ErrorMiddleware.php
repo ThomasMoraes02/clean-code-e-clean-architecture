@@ -1,5 +1,5 @@
 <?php
-namespace Checkout\Infra\Http\Middleware;
+namespace Whishlist\Infra\Http\Middleware;
 
 use Throwable;
 use Slim\Psr7\Response;
