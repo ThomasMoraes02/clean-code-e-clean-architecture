@@ -18,7 +18,10 @@ class ProductController
         private readonly CreateProduct $createProduct,
         private readonly UpdateProduct $updateProduct,
         private readonly DeleteProduct $deleteProduct
-    ) {
+    ) {}
+
+    public function dispatch(): void
+    {
         $this->server->on("GET", "/products[/{uuid}]", function($params, $body, $args) {
             $input = new GetProductsInput($args['uuid'] ?? null,$params['code'] ?? null, $params['name'] ?? null);
             $output = $this->getProducts->execute($input);
