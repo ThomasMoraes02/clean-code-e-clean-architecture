@@ -20,7 +20,7 @@ class RabbitMQAdapter implements Queue
         $channel->queue_declare($queueName,false,false,false,false);
         $channel->basic_consume($queueName, '', false, true, false, false,function(AMQPMessage $message) use ($callback) {
             $callback($message->getBody());
-            // $message->ack();
+            $message->ack();
         });
 
         $channel->close();
