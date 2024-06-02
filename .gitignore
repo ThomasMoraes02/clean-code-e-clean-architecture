@@ -9,3 +9,7 @@ backend/catalog/.env
 backend/checkout/vendor
 backend/checkout/database/database.sqlite
 backend/checkout/.env
+
+backend/whishlist/vendor
+backend/whishlist/database/database.sqlite
+backend/whishlist/.env
